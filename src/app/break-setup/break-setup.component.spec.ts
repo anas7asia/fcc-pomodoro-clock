@@ -25,7 +25,7 @@ describe('BreakSetupComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  // check elements with required by assignment ids are present
+  // certain ids are required by freecodecamp assignment
   it('should create break label', ()=> {
     expect(fixture.nativeElement.querySelector('#break-label')).toBeTruthy();
   })

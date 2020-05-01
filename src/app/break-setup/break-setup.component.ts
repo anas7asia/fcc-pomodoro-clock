@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-break-setup',
   templateUrl: './break-setup.component.html',
-  styleUrls: ['./break-setup.component.scss']
+  styleUrls: ['./break-setup.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreakSetupComponent {
 

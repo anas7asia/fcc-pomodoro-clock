@@ -10,6 +10,7 @@ export class AppComponent {
 
   breakLength = 5
   sessionLength = 25
+  isRunning = false
 
   updateBreakLength(value: number) {
     this.breakLength = value
@@ -18,4 +19,10 @@ export class AppComponent {
   updateSessionLength(value: number) {
     this.sessionLength = value
   }
+
+  pressStart() {
+    this.isRunning = !this.isRunning
+  }
+
+  reset() {}
 }

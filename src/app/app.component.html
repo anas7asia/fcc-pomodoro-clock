@@ -1,2 +1,4 @@
 <app-break-setup [breakLength]="breakLength" (update)="updateBreakLength($event)"></app-break-setup>
 <app-session-setup [sessionLength]="sessionLength" (update)="updateSessionLength($event)"></app-session-setup>
+
+<app-controls [isRunning]="isRunning" (pressStart)="pressStart()" (reset)="reset()"></app-controls>
