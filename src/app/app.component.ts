@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'pomodoro-clock';
+
+  breakLength = 5
+  sessionLength = 25
+
+  updateBreakLength(value: number) {
+    this.breakLength = value
+  }
+
+  updateSessionLength(value: number) {
+    this.sessionLength = value
+  }
 }
