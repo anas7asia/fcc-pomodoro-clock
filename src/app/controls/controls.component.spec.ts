@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 import { ControlsComponent } from './controls.component';
 
@@ -15,6 +16,7 @@ describe('ControlsComponent', () => {
   }));
 
   beforeEach(() => {
+    TestBed.overrideComponent(ControlsComponent, {add: {changeDetection: ChangeDetectionStrategy.Default}})
     fixture = TestBed.createComponent(ControlsComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
@@ -51,4 +53,16 @@ describe('ControlsComponent', () => {
     expect(comp.isRunning).toBeFalse();
   });
 
+  it('should update aria-pressed attribute', () => {
+    const startStopBtn = fixture.debugElement.query(By.css('#start_stop')).nativeElement;
+    expect(startStopBtn.getAttribute('aria-pressed')).toBe('false');
+    
+    comp.isRunning = true;
+    fixture.detectChanges();
+    expect(startStopBtn.getAttribute('aria-pressed')).toBe('true');
+
+    comp.isRunning = false;
+    fixture.detectChanges();
+    expect(startStopBtn.getAttribute('aria-pressed')).toBe('false');
+  });
 });
