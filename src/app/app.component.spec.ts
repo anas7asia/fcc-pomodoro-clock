@@ -1,7 +1,11 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { TimerSetup } from './constants';
 
 describe('AppComponent', () => {
+  let comp: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -10,22 +14,123 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  xit(`should have as title 'pomodoro-clock'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('pomodoro-clock');
-  });
-
-  xit('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    
+    comp = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('pomodoro-clock app is running!');
   });
+
+  it('should create the app', () => {
+    expect(comp).toBeTruthy();
+  });
+
+  it('should reset timer if reset button is pressed', () => {
+    comp.breakLength = 10
+    comp.sessionLength = 20
+    comp.isRunning = true
+    comp.isSession = false
+    comp.timeLeft = 600
+    comp.timer = setInterval(() => {}, 10000);
+
+    comp.reset();
+
+    expect(comp.breakLength).toBe(TimerSetup.defaultBreakLength);
+    expect(comp.sessionLength).toBe(TimerSetup.defaultSessionLength);
+    expect(comp.timeLeft).toBe(TimerSetup.defaultSessionLength * 60);
+    expect(comp.isRunning).toBeFalse();
+    expect(comp.isSession).toBeTrue();
+    expect(comp.timer).toBeUndefined();
+  });
+
+  it('should start/pause counting', fakeAsync(() => {
+    comp.timeLeft = 10;
+
+    // start timer
+    comp.pressStart();
+    expect(comp.isRunning).toBeTrue();
+    tick(1000);
+    expect(comp.timeLeft).toBe(9);
+    tick(1000);
+    expect(comp.timeLeft).toBe(8);
+    tick(1000);
+    expect(comp.timeLeft).toBe(7);
+    
+    // pause timer
+    comp.pressStart();
+    expect(comp.isRunning).toBeFalse();
+    tick(3000);
+    expect(comp.timeLeft).toBe(7);
+
+    // start again
+    comp.pressStart();
+    expect(comp.isRunning).toBeTrue();
+    tick(1000);
+    expect(comp.timeLeft).toBe(6);
+
+    // pause timer
+    comp.pressStart();
+    expect(comp.isRunning).toBeFalse();
+    tick(1000);
+    expect(comp.timeLeft).toBe(6);
+
+    // don't forget to stop timer after the test, otherwise fakeAsync will not be destroyed
+    clearInterval(comp.timer);
+  }));
+
+  it('should calculate timeLeft in seconds', () => {
+    comp.updateSessionLength(10);
+    expect(comp.timeLeft).toBe(600);
+  });
+
+  it('should switch between session and break values while counting', fakeAsync(() => { 
+    comp.pressStart();
+    
+    // first session 
+    comp.timeLeft = 2;
+    tick(1000);
+    tick(1000);
+    expect(comp.isSession).toBeFalse(); // turns to break
+    
+    // first break
+    comp.timeLeft = 2
+    tick(1000);
+    tick(1000);
+    expect(comp.isSession).toBeTrue(); // turns to session here
+    
+    // second session
+    comp.timeLeft = 2
+    tick(1000);
+    tick(1000);
+    expect(comp.isSession).toBeFalse(); // second break
+    
+    // don't forget to stop timer after the test, otherwise fakeAsync will not be destroyed
+    clearInterval(comp.timer);
+  }));
+
+  it('should update timer value when session and break are switched', fakeAsync(() => {
+    comp.sessionLength = 0.1; // 6 sec
+    comp.breakLength = 0.05; // 3 sec
+    comp.timeLeft = comp.sessionLength * 60;
+
+    comp.pressStart();
+
+    // tick 6 seconds
+    tick(1000);
+    tick(1000);
+    tick(1000);
+    tick(1000);
+    tick(1000);
+    tick(1000);
+    expect(comp.timeLeft).toBe(3); // 3 sec is break length
+
+    // tick 3 seconds of break length
+    tick(1000);
+    tick(1000);
+    tick(1000);
+    expect(comp.timeLeft).toBe(6);
+    
+    // don't forget to stop timer after the test, otherwise fakeAsync will not be destroyed
+    clearInterval(comp.timer);
+  }));
 });

@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { TimerSetup } from '../constants';
 
 import { SessionSetupComponent } from './session-setup.component';
-import { By } from '@angular/platform-browser';
 
 describe('SessionSetupComponent', () => {
   let comp: SessionSetupComponent;
@@ -17,7 +18,7 @@ describe('SessionSetupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SessionSetupComponent);
     comp = fixture.componentInstance;
-    comp.sessionLength = 5
+    comp.sessionLength = TimerSetup.defaultSessionLength
     fixture.detectChanges();
   });
 
@@ -47,32 +48,32 @@ describe('SessionSetupComponent', () => {
   });
   
   it('should have default session length value', () => {
-    expect(fixture.debugElement.query(By.css('#session-length')).properties.innerText).toBe('5');
+    expect(fixture.debugElement.query(By.css('#session-length')).properties.innerText).toBe(`${TimerSetup.defaultSessionLength}`);
   });
   
   it('should decrement session length value on decrement button click', () => {
     comp.update.subscribe(newsessionLength => comp.sessionLength = newsessionLength);
     fixture.debugElement.query(By.css('#session-decrement')).triggerEventHandler('click', null);
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#session-length')).properties.innerText).toBe('4');
+    expect(fixture.debugElement.query(By.css('#session-length')).properties.innerText).toBe(`${TimerSetup.defaultSessionLength - 1}`);
   })
   
   it('should increment session length value on increment button click', () => {
     comp.update.subscribe(newsessionLength => comp.sessionLength = newsessionLength);
     fixture.debugElement.query(By.css('#session-increment')).triggerEventHandler('click', null);
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('#session-length')).properties.innerText).toBe('6');
+    expect(fixture.debugElement.query(By.css('#session-length')).properties.innerText).toBe(`${TimerSetup.defaultSessionLength + 1}`);
   });
   
   it('should keep session value between 1 and 60', () => {
     comp.update.subscribe(newsessionLength => comp.sessionLength = newsessionLength);
     
-    comp.sessionLength = 1;
+    comp.sessionLength = TimerSetup.minValue;
     fixture.debugElement.query(By.css('#session-decrement')).triggerEventHandler('click', null);
-    expect(comp.sessionLength).toBe(1);
+    expect(comp.sessionLength).toBe(TimerSetup.minValue);
 
-    comp.sessionLength = 60;
+    comp.sessionLength = TimerSetup.maxValue;
     fixture.debugElement.query(By.css('#session-increment')).triggerEventHandler('click', null);
-    expect(comp.sessionLength).toBe(60);
+    expect(comp.sessionLength).toBe(TimerSetup.maxValue);
   });
 });

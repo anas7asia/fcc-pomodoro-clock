@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { TimerSetup } from '../constants';
 
 @Component({
   selector: 'app-break-setup',
@@ -12,10 +13,10 @@ export class BreakSetupComponent {
   @Output() update = new EventEmitter<number>()
 
   onDecrement() {
-    if (this.breakLength > 1) this.update.emit(this.breakLength - 1)
+    if (this.breakLength > TimerSetup.minValue) this.update.emit(this.breakLength - 1)
   }
   
   onIncrement() {
-    if (this.breakLength < 60) this.update.emit(this.breakLength + 1)
+    if (this.breakLength < TimerSetup.maxValue) this.update.emit(this.breakLength + 1)
   }
 }
