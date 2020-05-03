@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-display',
@@ -6,14 +6,19 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   styleUrls: ['./display.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DisplayComponent implements OnInit {
+export class DisplayComponent {
 
-  @Input() timeLeft: string
+  @Input() set timeLeft(seconds: number) {
+    this._timeLeft = this.formatToMMSS(seconds)
+  }
   @Input() isSession: boolean = true
+  _timeLeft: string
 
-  constructor() { }
-
-  ngOnInit(): void {
+  private formatToMMSS(seconds: number): string {
+    const transformToStr = (num: number) => `${num > 10 ? num : '0'+num}`
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${transformToStr(mins)}:${transformToStr(secs)}`
   }
 
 }

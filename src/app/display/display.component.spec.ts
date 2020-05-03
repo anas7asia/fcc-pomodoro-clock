@@ -50,9 +50,14 @@ describe('DisplayComponent', () => {
     expect(label.innerText).toBe('Session');
   });
 
-  it('should have non-empty timer', () => {
-    expect(fixture.debugElement.query(By.css('#timer-left')).nativeElement.innerText).toBeTruthy();
-  });
+  it('should have non-empty timer in mm:ss format', () => {
+    comp.timeLeft = 120; // 2 minutes 0 seconds
+    const rgx = /(?:[0-5][0-9]:[0-5][0-9])?/; // matching from 00:00 to 59:59 in mm:ss format
 
-  // TODO(test): check timer displayed in mm:ss format
+    fixture.detectChanges();
+    const timer = fixture.debugElement.query(By.css('#timer-left')).nativeElement.innerText;
+    expect(timer).toBeTruthy();
+    expect(timer).toMatch(rgx, timer);
+    expect(timer).toBe('02:00');
+  });
 });
