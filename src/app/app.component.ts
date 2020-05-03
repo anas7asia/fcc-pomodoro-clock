@@ -47,10 +47,13 @@ export class AppComponent {
   private launchTimer() {
     this.timer = setInterval(() => {
       --this.timeLeft
+
       if (this.timeLeft === 0) {
-        console.log('ZERO')
-        this.isSession = !this.isSession
-        this.timeLeft = this.translateToSeconds(this.isSession ? this.sessionLength : this.breakLength)
+        // wait 1 second to update displayed clock in appropriate time 
+        setTimeout(() => {
+          this.isSession = !this.isSession
+          this.timeLeft = this.translateToSeconds(this.isSession ? this.sessionLength : this.breakLength)
+        }, 1000);
       }
     }, 1000);
   }

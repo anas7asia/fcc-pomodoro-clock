@@ -87,21 +87,24 @@ describe('AppComponent', () => {
     comp.pressStart();
     
     // first session 
-    comp.timeLeft = 2;
+    comp.timeLeft = 2; // seconds
     tick(1000);
     tick(1000);
+    tick(1000); // one second more to wait for setTimeout
     expect(comp.isSession).toBeFalse(); // turns to break
     
     // first break
-    comp.timeLeft = 2
+    comp.timeLeft = 2; // seconds
     tick(1000);
     tick(1000);
+    tick(1000); // one second more to wait for setTimeout
     expect(comp.isSession).toBeTrue(); // turns to session here
     
     // second session
-    comp.timeLeft = 2
+    comp.timeLeft = 2; // seconds
     tick(1000);
     tick(1000);
+    tick(1000); // one second more to wait for setTimeout
     expect(comp.isSession).toBeFalse(); // second break
     
     // don't forget to stop timer after the test, otherwise fakeAsync will not be destroyed
@@ -115,20 +118,14 @@ describe('AppComponent', () => {
 
     comp.pressStart();
 
-    // tick 6 seconds
     tick(1000);
     tick(1000);
     tick(1000);
     tick(1000);
     tick(1000);
-    tick(1000);
-    expect(comp.timeLeft).toBe(3); // 3 sec is break length
-
-    // tick 3 seconds of break length
-    tick(1000);
-    tick(1000);
-    tick(1000);
-    expect(comp.timeLeft).toBe(6);
+    tick(1000); // after 6 seconds
+    tick(1000); // one more to let setTimeout be handled
+    expect(comp.timeLeft).toBe(2); // 3 sec (minus prevoius one) is break length
     
     // don't forget to stop timer after the test, otherwise fakeAsync will not be destroyed
     clearInterval(comp.timer);
