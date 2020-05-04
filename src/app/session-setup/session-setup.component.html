@@ -1,6 +1,15 @@
-<section role="group">
-  <h2 id="session-label">Session Length</h2>
+<section role="group" class="setup">
+  <h2 id="session-label" class="setup-label">Session Length</h2>
+
+  <button 
+    id="session-decrement" 
+    title="Decrease session length"
+    (click)="onDecrement()">-</button>
+
   <span id="session-length" aria-labelledby="session-label" aria-live="assertive">{{ sessionLength }}</span>
-  <button id="session-decrement" (click)="onDecrement()">-</button>
-  <button id="session-increment" (click)="onIncrement()">+</button>
+
+  <button 
+    id="session-increment" 
+    title="Increase session length"
+    (click)="onIncrement()">+</button>
 </section>

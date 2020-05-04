@@ -1,1 +1,31 @@
+@import 'assets/variables.scss';
+
 /* You can add global styles to this file, and also import other style files */
+html {
+  font-size: 16px;
+}
+
+body {
+  padding: 3rem 0;
+  font-family: $font-primary;
+  text-align: center;
+}
+
+button {
+  padding: .75rem;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: $font-primary;
+}
+
+.setup {
+  margin: 0 .75rem;
+  font-size: 1.45rem;
+}
+
+.setup-label {
+  font-size: 1.25rem;
+  font-weight: $font-weight-regular;
+}
+

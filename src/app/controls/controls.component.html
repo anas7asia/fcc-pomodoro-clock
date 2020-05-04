@@ -1,8 +1,16 @@
 <button 
   id="start_stop" 
+  class="control-button"
   [attr.aria-pressed]="isRunning"
-  [ngClass]="{'active': isRunning, 'paused': !isRunning}" 
+  title="{{ isRunning ? 'Pause' : 'Start' }}"
   (click)="pressStart.emit()">
-  {{ isRunning ? 'Stop' : 'Start' }}
+  <i aria-hidden="true" class="fa" [ngClass]="isRunning ? 'fa-pause' : 'fa-play'"></i>
 </button>
-<button id="reset" (click)="reset.emit()">Reset</button>
+
+<button 
+  id="reset"
+  class="control-button"
+  title="Reset"
+  (click)="reset.emit()">
+  <i aria-hidden="true" class="fa fa-repeat"></i>
+</button>

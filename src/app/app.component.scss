@@ -1,0 +1,14 @@
+@import '../assets/variables.scss';
+
+.wrapper {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 800px;
+}
+
+.setup {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 2.5rem 0;
+}

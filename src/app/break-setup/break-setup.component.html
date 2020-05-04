@@ -1,6 +1,15 @@
-<section role="group">
-  <h2 id="break-label">Break Length</h2>
+<section role="group" class="setup">
+  <h2 id="break-label" class="setup-label">Break Length</h2>
+
+  <button 
+    id="break-decrement"
+    title="Decrease break length" 
+    (click)="onDecrement()">-</button>
+
   <span id="break-length" aria-labelledby="break-label" aria-live="assertive">{{ breakLength }}</span>
-  <button id="break-decrement" (click)="onDecrement()">-</button>
-  <button id="break-increment" (click)="onIncrement()">+</button>
+
+  <button 
+    id="break-increment"
+    title="Increase break length"
+    (click)="onIncrement()">+</button>
 </section>
