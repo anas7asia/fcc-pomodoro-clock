@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TimerSetup } from './constants';
+import { BeeperComponent } from './beeper/beeper.component';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,7 @@ import { TimerSetup } from './constants';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'pomodoro-clock';
-
+  @ViewChild(BeeperComponent) beeper: BeeperComponent
   breakLength = TimerSetup.defaultBreakLength
   sessionLength = TimerSetup.defaultSessionLength
   isRunning = false
@@ -42,6 +42,7 @@ export class AppComponent {
     this.timeLeft = this.translateToSeconds(this.sessionLength)
     this.isRunning = false
     this.isSession = true
+    this.beeper.reset()
   }
 
   private launchTimer() {
@@ -53,12 +54,13 @@ export class AppComponent {
         setTimeout(() => {
           this.isSession = !this.isSession
           this.timeLeft = this.translateToSeconds(this.isSession ? this.sessionLength : this.breakLength)
-        }, 1000);
+          this.beeper.play()
+        }, 1000)
       }
-    }, 1000);
+    }, 1000)
   }
 
   private translateToSeconds(minutes: number): number {
-    return minutes * 60;
+    return minutes * 60
   }
 }
