@@ -14,7 +14,7 @@ export class AppComponent {
   isRunning = false
   isSession = true
   timeLeft: number = this.translateToSeconds(this.sessionLength)
-  timer // timeout - interval id
+  timer // interval id
 
   updateBreakLength(minutes: number) {
     this.breakLength = minutes
@@ -47,10 +47,10 @@ export class AppComponent {
 
   private launchTimer() {
     this.timer = setInterval(() => {
-      --this.timeLeft
+      this.timeLeft--
 
       if (this.timeLeft === 0) {
-        // wait 1 second to update displayed clock in appropriate time 
+        // wait 1 second to display 00:00 and then turn session to break 
         setTimeout(() => {
           this.isSession = !this.isSession
           this.timeLeft = this.translateToSeconds(this.isSession ? this.sessionLength : this.breakLength)

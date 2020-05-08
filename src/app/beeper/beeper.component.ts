@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-beeper',
   templateUrl: './beeper.component.html',
-  styleUrls: ['./beeper.component.scss']
+  styleUrls: ['./beeper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BeeperComponent {
 
