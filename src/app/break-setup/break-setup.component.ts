@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { TimerSetup } from '../constants';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { SetupComponent } from '../setup/setup.component';
 
 @Component({
   selector: 'app-break-setup',
@@ -7,16 +7,4 @@ import { TimerSetup } from '../constants';
   styleUrls: ['./break-setup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreakSetupComponent {
-
-  @Input() breakLength: number
-  @Output() update = new EventEmitter<number>()
-
-  onDecrement() {
-    if (this.breakLength > TimerSetup.minValue) this.update.emit(this.breakLength - 1)
-  }
-  
-  onIncrement() {
-    if (this.breakLength < TimerSetup.maxValue) this.update.emit(this.breakLength + 1)
-  }
-}
+export class BreakSetupComponent extends SetupComponent {}

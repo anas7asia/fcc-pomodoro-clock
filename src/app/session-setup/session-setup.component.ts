@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { TimerSetup } from '../constants';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { SetupComponent } from '../setup/setup.component';
 
 @Component({
   selector: 'app-session-setup',
@@ -7,16 +7,4 @@ import { TimerSetup } from '../constants';
   styleUrls: ['./session-setup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SessionSetupComponent {
-
-  @Input() sessionLength: number
-  @Output() update = new EventEmitter<number>()
-
-  onDecrement() {
-    if (this.sessionLength > TimerSetup.minValue) this.update.emit(this.sessionLength - 1)
-  }
-  
-  onIncrement() {
-    if (this.sessionLength < TimerSetup.maxValue) this.update.emit(this.sessionLength + 1)
-  }
-}
+export class SessionSetupComponent extends SetupComponent {}

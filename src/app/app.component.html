@@ -4,8 +4,8 @@
   </header>
   <main>
     <div class="setup">
-      <app-break-setup [breakLength]="breakLength" (update)="updateBreakLength($event)"></app-break-setup>
-      <app-session-setup [sessionLength]="sessionLength" (update)="updateSessionLength($event)"></app-session-setup>
+      <app-break-setup [length]="breakLength" (update)="updateBreakLength($event)"></app-break-setup>
+      <app-session-setup [length]="sessionLength" (update)="updateSessionLength($event)"></app-session-setup>
     </div>
     <app-display [timeLeft]="timeLeft" [isSession]="isSession"></app-display>
     <app-controls [isRunning]="isRunning" (pressStart)="pressStart()" (reset)="reset()"></app-controls>

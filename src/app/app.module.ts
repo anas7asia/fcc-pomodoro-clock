@@ -7,6 +7,7 @@ import { SessionSetupComponent } from './session-setup/session-setup.component';
 import { DisplayComponent } from './display/display.component';
 import { ControlsComponent } from './controls/controls.component';
 import { BeeperComponent } from './beeper/beeper.component';
+import { SetupComponent } from './setup/setup.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { BeeperComponent } from './beeper/beeper.component';
     SessionSetupComponent,
     DisplayComponent,
     ControlsComponent,
-    BeeperComponent
+    BeeperComponent,
+    SetupComponent
   ],
   imports: [
     BrowserModule

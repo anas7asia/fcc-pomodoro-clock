@@ -18,7 +18,7 @@ describe('BreakSetupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BreakSetupComponent);
     comp = fixture.componentInstance;
-    comp.breakLength = TimerSetup.defaultBreakLength
+    comp.length = TimerSetup.defaultBreakLength
     fixture.detectChanges();
   });
 
@@ -52,29 +52,29 @@ describe('BreakSetupComponent', () => {
   });
   
   it('should decrement break length value on decrement button click', () => {
-    comp.update.subscribe(newBreakLength => comp.breakLength = newBreakLength);
+    comp.update.subscribe(newLength => comp.length = newLength);
     fixture.debugElement.query(By.css('#break-decrement')).triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('#break-length')).properties.innerText).toBe(`${TimerSetup.defaultBreakLength - 1}`);
   })
   
   it('should increment break length value on increment button click', () => {
-    comp.update.subscribe(newBreakLength => comp.breakLength = newBreakLength);
+    comp.update.subscribe(newLength => comp.length = newLength);
     fixture.debugElement.query(By.css('#break-increment')).triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('#break-length')).properties.innerText).toBe(`${TimerSetup.defaultBreakLength + 1}`);
   });
   
   it('should keep break value between 1 and 60', () => {
-    comp.update.subscribe(newBreakLength => comp.breakLength = newBreakLength);
+    comp.update.subscribe(newLength => comp.length = newLength);
     
-    comp.breakLength = TimerSetup.minValue;
+    comp.length = TimerSetup.minValue;
     fixture.debugElement.query(By.css('#break-decrement')).triggerEventHandler('click', null);
-    expect(comp.breakLength).toBe(TimerSetup.minValue);
+    expect(comp.length).toBe(TimerSetup.minValue);
 
-    comp.breakLength = TimerSetup.maxValue;
+    comp.length = TimerSetup.maxValue;
     fixture.debugElement.query(By.css('#break-increment')).triggerEventHandler('click', null);
-    expect(comp.breakLength).toBe(TimerSetup.maxValue);
+    expect(comp.length).toBe(TimerSetup.maxValue);
   });
 
 });
